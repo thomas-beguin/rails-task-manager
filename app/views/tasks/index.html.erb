@@ -1,0 +1,19 @@
+<h1>My Tasks</h1>
+
+<ul class="list-group">
+  <% @tasks.each do |task| %>
+    <li class="list-group-item d-flex" data-controller = "checkbox" >
+
+      <%= form_with model: task, url: "/tasks/#{task.id}/checkbox", method: :patch, class: "form-check m-1 pe-auto" do |f| %>
+        <%= f.check_box :completed, class: "check-box" %>
+      <% end %>
+
+      <%= link_to task_path(task), class: "text-monospace text-body text-decoration-none m-1" do %>
+        <%= task.title %>
+        <%= link_to "🗑️", task_path(task), class: "m-1", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Add a new task", new_task_path, class: "btn btn-primary mt-3" %>
